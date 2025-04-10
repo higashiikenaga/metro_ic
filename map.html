@@ -31,6 +31,7 @@
       padding: 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       position: relative;
+      cursor: pointer;
       transition: transform 0.2s ease;
     }
     .station:hover {
@@ -64,35 +65,92 @@
       height: 30px;
       background: linear-gradient(to bottom, #c084fc, #7e22ce);
     }
+    .details {
+      max-width: 640px;
+      margin: 40px auto 0;
+      background: #fefce8;
+      border: 2px dashed #facc15;
+      border-radius: 12px;
+      padding: 20px;
+      display: none;
+    }
+    .details img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .details h3 {
+      margin: 0;
+      font-size: 20px;
+      color: #92400e;
+    }
+    .details p {
+      font-size: 14px;
+      color: #4b5563;
+    }
   </style>
 </head>
 <body>
   <h1>魔界府メトロ - 路線図</h1>
   <div class="map-container">
-    <div class="station">
-      <h2>魔王城</h2>
-      <div class="comment">玲「魔界の中心から、いってきまーす！」／リリス「発車メロディは私が歌ってます♡」</div>
-    </div>
+    <div class="station" data-id="maou">魔王城<br><span class="comment">玲「いってきまーす！」／リリス「歌ってます♡」</span></div>
     <div class="connector"></div>
-    <div class="station">
-      <h2>府庁前</h2>
-      <div class="comment">奏「ここが魔界の政治と文化の中心！」／ミモザ「改札はモデル体型の人に優しい構造です」</div>
-    </div>
+    <div class="station" data-id="chou">府庁前<br><span class="comment">奏「中心！」／ミモザ「改札広いよ」</span></div>
     <div class="connector"></div>
-    <div class="station">
-      <h2>南城下町</h2>
-      <div class="comment">町民「このへん、お昼のコロッケがめっちゃ美味しいです」</div>
-    </div>
+    <div class="station" data-id="minami">南城下町<br><span class="comment">町民「コロッケうまい」</span></div>
     <div class="connector"></div>
-    <div class="station">
-      <h2>広原台</h2>
-      <div class="comment">高坂大統領メモ：「未来都市構想の核として開発。ここから空港アクセスもOK」</div>
-    </div>
+    <div class="station" data-id="hiro">広原台<br><span class="comment">高坂「未来都市構想メモ」</span></div>
     <div class="connector"></div>
-    <div class="station">
-      <h2>夢霧が谷</h2>
-      <div class="comment">生徒「サキュバスの聖地へようこそっ♡ 魔力検定はここからです〜！」</div>
-    </div>
+    <div class="station" data-id="yume">夢霧が谷<br><span class="comment">生徒「魔力検定あるよ♡」</span></div>
   </div>
+
+  <div class="details" id="stationDetails">
+    <img src="" alt="駅イメージ" id="stationImage">
+    <h3 id="stationTitle"></h3>
+    <p id="stationInfo"></p>
+  </div>
+
+  <script>
+    const stations = {
+      maou: {
+        title: "魔王城駅",
+        img: "maou.jpg",
+        info: "・開業年：魔暦101年\n・地下4階構造、魔力昇降ホーム\n・名物：リリスの発車メロディ＆Re+M+Magic公式グッズ"
+      },
+      chou: {
+        title: "府庁前駅",
+        img: "chou.jpg",
+        info: "・政治文化の中心駅\n・奏とミモザの記念オブジェあり\n・広報ブースとカフェが人気"
+      },
+      minami: {
+        title: "南城下町駅",
+        img: "minami.jpg",
+        info: "・庶民の活気あふれる商店街直結\n・名物：昼のコロッケと夕方セール\n・観光にもオススメ"
+      },
+      hiro: {
+        title: "広原台駅",
+        img: "hiro.jpg",
+        info: "・未来都市構想の中核拠点\n・空港アクセス対応\n・高坂大統領メモ展示コーナーあり"
+      },
+      yume: {
+        title: "夢霧が谷駅",
+        img: "yume.jpg",
+        info: "・サキュバス学校の最寄駅\n・魔力検定センター直結\n・魔法制服を着た案内ロボが出迎え♡"
+      }
+    };
+
+    document.querySelectorAll('.station').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-id');
+        const data = stations[id];
+        document.getElementById('stationTitle').textContent = data.title;
+        document.getElementById('stationImage').src = data.img;
+        document.getElementById('stationImage').alt = data.title;
+        document.getElementById('stationInfo').textContent = data.info;
+        document.getElementById('stationDetails').style.display = 'block';
+        document.getElementById('stationDetails').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>
