@@ -210,17 +210,19 @@
     </div>
   </div>
 
-  <div class="secret-trigger" onclick="startNovel()"></div>
+ <div class="secret-trigger" onclick="startNovel()"></div>
 
-  <div class="cafe-overlay" id="cafeOverlay">
+<div class="cafe-overlay" id="cafeOverlay" style="display: none;">
   <div class="cafe-scene">
-    <img class="char-left" src="reina.png" alt="麗奈">
-    <img class="char-rei" src="rei.png" alt="玲">
-    <img class="char-kana" src="kana.png" alt="奏">
-    <div class="textbox" id="textBox">玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」</div>
-    <button id="nextBtn">▶ 次へ</button>
+    <img class="char-left" id="char-leina" src="leina.png" alt="麗奈" style="display: none;" />
+    <img class="char-rei" id="char-rei" src="rei.png" alt="玲" style="display: none;" />
+    <img class="char-kana" id="char-kana" src="kana.png" alt="奏" style="display: none;" />
+    <div class="novel-box" id="novel-box" style="display: none;">
+      <div class="novel-text" id="novel-text">......</div>
+      <button class="next-button" id="nextBtn" onclick="nextText()">▶ 次へ</button>
+    </div>
   </div>
-  </div>
+</div>
 
   <script>
     function showPopup(id) {
@@ -229,33 +231,31 @@
       if (popup) popup.style.display = 'block';
     }
 
-    const texts = [
-      "玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」",
-      "麗奈「ようこそ。またバイトする？」",
-      "奏「します！よろしくお願いいたします！」"
-    ];
-    let index = 0;
+  const texts = [
+    "玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」",
+    "麗奈「ようこそ。またバイトする？」",
+    "奏「します！よろしくお願いいたします！」"
+  ];
+  let index = 0;
 
-    function startNovel() {
-      index = 0;
-      document.getElementById('novel-box').style.display = 'flex';
-      document.getElementById('char-leina').style.display = 'block';
-      document.getElementById('char-rei').style.display = 'block';
-      document.getElementById('char-kana').style.display = 'block';
-      document.getElementById('novel-text').innerText = texts[index];
-    }
+  function startNovel() {
+    index = 0;
+    document.getElementById('cafeOverlay').style.display = 'block';
+    document.getElementById('char-leina').style.display = 'block';
+    document.getElementById('char-rei').style.display = 'block';
+    document.getElementById('char-kana').style.display = 'block';
+    document.getElementById('novel-box').style.display = 'flex';
+    document.getElementById('novel-text').innerText = texts[index];
+  }
 
-    function nextText() {
-      index++;
-      if (index >= texts.length) {
-        document.getElementById('novel-box').style.display = 'none';
-        document.getElementById('char-leina').style.display = 'none';
-        document.getElementById('char-rei').style.display = 'none';
-        document.getElementById('char-kana').style.display = 'none';
-        return;
-      }
-      document.getElementById('novel-text').innerText = texts[index];
+  function nextText() {
+    index++;
+    if (index >= texts.length) {
+      document.getElementById('cafeOverlay').style.display = 'none';
+      return;
     }
+    document.getElementById('novel-text').innerText = texts[index];
+  }
   </script>
 </body>
 </html>
