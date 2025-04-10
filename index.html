@@ -62,6 +62,37 @@
       z-index: 1000;
       animation: pulse 0.6s ease-in-out;
     }
+    .nightmode {
+      background-color: #1e1b2e;
+      color: #eee;
+    }
+    .nightmode .card {
+      background-color: #2d2640;
+      color: #eee;
+      box-shadow: 0 0 8px rgba(153, 102, 255, 0.4);
+    }
+    .nightmode .header {
+      background-color: #4b1e74;
+    }
+    .nightmode .welcome {
+      color: #a78bfa;
+    }
+    .schedule {
+      font-size: 14px;
+      color: #333;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .alert {
+      font-size: 14px;
+      color: #c026d3;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .alert a {
+      color: #7c3aed;
+      text-decoration: underline;
+    }
     @keyframes fadeIn {
       to {
         opacity: 1;
@@ -85,7 +116,9 @@
 </head>
 <body>
   <div class="header">🔮 Re+M+PASS 認証完了</div>
-  <div class="welcome">魔王様、ようこそ魔界府メトロサービスへ</div>
+  <div class="welcome" id="welcomeMessage">魔王様、ようこそ魔界府メトロサービスへ</div>
+  <div class="schedule" id="scheduleArea"></div>
+  <div class="alert" id="alertArea"></div>
   <div class="content">
     <div class="card">
       <div class="label">利用者</div>
@@ -125,6 +158,41 @@
     document.body.addEventListener('touchend', function () {
       clearTimeout(pressTimer);
     });
+
+    const today = new Date();
+    const formatted = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+    const hour = today.getHours();
+    const day = today.getDay();
+    let message = "魔王様、今日も魔界府メトロサービスをご利用くださいましてありがとうございます。";
+    if (hour >= 5 && hour < 9) {
+      message += " お仕事頑張ってください！";
+    } else if (hour >= 12 && hour < 14) {
+      message += " 今日も公務＆Re+M+Magicの活動頑張ってね！ by リリス";
+    } else if (hour >= 17 && hour < 21) {
+      message += " 一日お疲れ様でした。ご帰宅の際も魔力補充をお忘れなく。";
+    } else if (hour >= 22 || hour < 4) {
+      document.body.classList.add("nightmode");
+      message += " 魔王城ナイトモード発動中。静かなる魔力が満ちています...";
+    }
+
+    // 満月の日（毎月15日仮定）
+    if (today.getDate() === 15) {
+      message += " 本日は満月。魔力が満ちています！いっぱい使っちゃおう！🌕";
+    }
+
+    // 年度末アラート（3月25日〜31日）
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    if (month === 3 && date >= 25) {
+      document.getElementById("alertArea").innerHTML = "⚠️ 魔界府メトロは年度末ダイヤ改正期間です。<a href='https://higashiikenaga.github.io/metro_ic/timetable.html' target='_blank'>時刻表をご確認ください</a>";
+    }
+
+    document.getElementById("welcomeMessage").textContent = `${formatted} ${message}`;
+
+    // 土日スケジュール
+    if (day === 0 || day === 6) {
+      document.getElementById("scheduleArea").textContent = "📅 今日の予定：10:00-11:30 高坂大統領との会談 / 13:30-16:45 Re+M+Magic練習 / 19:00〜20:30 Re+M+Magicライブ / 21:00〜 魔界府定例会議";
+    }
   </script>
 </body>
 </html>
