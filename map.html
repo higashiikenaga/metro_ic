@@ -22,6 +22,7 @@
       flex-direction: column;
       align-items: center;
       gap: 30px;
+      position: relative;
     }
     .station {
       background: #fdf4ff;
@@ -94,6 +95,79 @@
       margin: 0;
       white-space: pre-wrap;
     }
+    .secret-trigger {
+      position: absolute;
+      top: 120px;
+      left: 190px;
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .cafe-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      z-index: 100;
+      color: #fff;
+      font-size: 18px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .cafe-scene {
+      width: 100%;
+      height: 100%;
+      background: url('bg_placeholder.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+    .char-left, .char-right {
+      width: 30%;
+      max-height: 80%;
+    }
+    .char-rei, .char-kana {
+      position: absolute;
+      bottom: 40px;
+      width: 25%;
+      max-height: 75%;
+    }
+    .char-rei {
+      right: 30%;
+    }
+    .char-kana {
+      right: 5%;
+    }
+    .textbox {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 16px;
+      width: 80%;
+      font-size: 16px;
+    }
+    .cafe-overlay button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #9333ea;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -102,6 +176,7 @@
     <div class="station" data-id="maou">魔王城<br><span class="comment">玲「いってきまーす！」／リリス「歌ってます♡」</span></div>
     <div class="connector"></div>
     <div class="station" data-id="chou">府庁前<br><span class="comment">奏「中心！」／ミモザ「改札広いよ」</span></div>
+    <div class="secret-trigger" title="？？？"></div>
     <div class="connector"></div>
     <div class="station" data-id="minami">南城下町<br><span class="comment">町民「コロッケうまい」</span></div>
     <div class="connector"></div>
@@ -116,31 +191,41 @@
     <p id="popupInfo"></p>
   </div>
 
+  <div class="cafe-overlay" id="cafeOverlay">
+    <div class="cafe-scene">
+      <img class="char-left" src="reina.png" alt="麗奈">
+      <img class="char-rei" src="rei.png" alt="玲">
+      <img class="char-kana" src="kana.png" alt="奏">
+      <div class="textbox" id="textBox">玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」</div>
+    </div>
+    <button id="nextBtn">▶ 次へ</button>
+  </div>
+
   <script>
     const stations = {
       maou: {
         title: "魔王城駅",
-        img: "maou.png",
+        img: "maou.jpg",
         info: "・開業年：魔暦101年\n・地下4階構造、魔力昇降ホーム\n・名物：リリスの発車メロディ＆Re+M+Magic公式グッズ"
       },
       chou: {
         title: "府庁前駅",
-        img: "chou.png",
+        img: "chou.jpg",
         info: "・政治文化の中心駅\n・奏とミモザの記念オブジェあり\n・広報ブースとカフェが人気"
       },
       minami: {
         title: "南城下町駅",
-        img: "minami.png",
+        img: "minami.jpg",
         info: "・庶民の活気あふれる商店街直結\n・名物：昼のコロッケと夕方セール\n・観光にもオススメ"
       },
       hiro: {
         title: "広原台駅",
-        img: "hiro.png",
+        img: "hiro.jpg",
         info: "・未来都市構想の中核拠点\n・空港アクセス対応\n・高坂大統領メモ展示コーナーあり"
       },
       yume: {
         title: "夢霧が谷駅",
-        img: "yume.png",
+        img: "yume.jpg",
         info: "・サキュバス学校の最寄駅\n・魔力検定センター直結\n・魔法制服を着た案内ロボが出迎え♡"
       }
     };
@@ -164,6 +249,31 @@
         popup.style.top = `${window.scrollY + rect.top}px`;
         popup.style.left = `${rect.right + 10}px`;
       });
+    });
+
+    const overlay = document.getElementById('cafeOverlay');
+    const textBox = document.getElementById('textBox');
+    const nextBtn = document.getElementById('nextBtn');
+    const messages = [
+      "玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」",
+      "麗奈「ようこそ。またバイトする？」",
+      "奏「します！よろしくお願いいたします！」"
+    ];
+    let msgIndex = 0;
+
+    document.querySelector('.secret-trigger').addEventListener('click', () => {
+      overlay.style.display = 'flex';
+      msgIndex = 0;
+      textBox.textContent = messages[msgIndex];
+    });
+
+    nextBtn.addEventListener('click', () => {
+      msgIndex++;
+      if (msgIndex < messages.length) {
+        textBox.textContent = messages[msgIndex];
+      } else {
+        overlay.style.display = 'none';
+      }
     });
   </script>
 </body>
