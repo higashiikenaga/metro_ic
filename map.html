@@ -133,26 +133,42 @@
       padding: 40px;
       box-sizing: border-box;
     }
-    .char-left, .char-right {
-      width: 30%;
-      max-height: 80%;
-    }
-    .char-left, .char-rei, .char-kana {
+      .char-left {
       object-fit: contain;
-      height: auto;
+      height: 90vh; /* 麗奈を大きく表示 */
     }
+
     .char-rei, .char-kana {
+      object-fit: contain;
+      height: 80vh;
+    }
+
+    .novel-box {
       position: absolute;
-      bottom: 40px;
-      width: 25%;
-      max-height: 75%;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
-    .char-rei {
-      right: 30%;
+
+    .novel-next-button {
+      background-color: #8b5cf6;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
     }
-    .char-kana {
-      right: 5%;
-    }
+
     .textbox {
       position: absolute;
       bottom: 0;
