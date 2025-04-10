@@ -65,28 +65,34 @@
       height: 30px;
       background: linear-gradient(to bottom, #c084fc, #7e22ce);
     }
-    .details {
-      max-width: 640px;
-      margin: 40px auto 0;
+    .details-popup {
+      position: absolute;
+      top: 0;
+      left: 280px;
+      z-index: 10;
       background: #fefce8;
       border: 2px dashed #facc15;
       border-radius: 12px;
-      padding: 20px;
+      padding: 16px;
+      width: 280px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
       display: none;
     }
-    .details img {
-      max-width: 100%;
+    .details-popup img {
+      width: 100%;
       border-radius: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .details h3 {
-      margin: 0;
-      font-size: 20px;
+    .details-popup h3 {
+      font-size: 18px;
+      margin: 0 0 6px;
       color: #92400e;
     }
-    .details p {
+    .details-popup p {
       font-size: 14px;
       color: #4b5563;
+      margin: 0;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -104,51 +110,59 @@
     <div class="station" data-id="yume">夢霧が谷<br><span class="comment">生徒「魔力検定あるよ♡」</span></div>
   </div>
 
-  <div class="details" id="stationDetails">
-    <img src="" alt="駅イメージ" id="stationImage">
-    <h3 id="stationTitle"></h3>
-    <p id="stationInfo"></p>
+  <div class="details-popup" id="popup">
+    <img src="" alt="駅イメージ" id="popupImage">
+    <h3 id="popupTitle"></h3>
+    <p id="popupInfo"></p>
   </div>
 
   <script>
     const stations = {
       maou: {
         title: "魔王城駅",
-        img: "maou.png",
+        img: "maou.jpg",
         info: "・開業年：魔暦101年\n・地下4階構造、魔力昇降ホーム\n・名物：リリスの発車メロディ＆Re+M+Magic公式グッズ"
       },
       chou: {
         title: "府庁前駅",
-        img: "chou.png",
+        img: "chou.jpg",
         info: "・政治文化の中心駅\n・奏とミモザの記念オブジェあり\n・広報ブースとカフェが人気"
       },
       minami: {
         title: "南城下町駅",
-        img: "minami.png",
+        img: "minami.jpg",
         info: "・庶民の活気あふれる商店街直結\n・名物：昼のコロッケと夕方セール\n・観光にもオススメ"
       },
       hiro: {
         title: "広原台駅",
-        img: "hiro.png",
+        img: "hiro.jpg",
         info: "・未来都市構想の中核拠点\n・空港アクセス対応\n・高坂大統領メモ展示コーナーあり"
       },
       yume: {
         title: "夢霧が谷駅",
-        img: "yume.png",
+        img: "yume.jpg",
         info: "・サキュバス学校の最寄駅\n・魔力検定センター直結\n・魔法制服を着た案内ロボが出迎え♡"
       }
     };
 
+    const popup = document.getElementById("popup");
+    const img = document.getElementById("popupImage");
+    const title = document.getElementById("popupTitle");
+    const info = document.getElementById("popupInfo");
+
     document.querySelectorAll('.station').forEach(el => {
-      el.addEventListener('click', () => {
+      el.addEventListener('click', (e) => {
         const id = el.getAttribute('data-id');
         const data = stations[id];
-        document.getElementById('stationTitle').textContent = data.title;
-        document.getElementById('stationImage').src = data.img;
-        document.getElementById('stationImage').alt = data.title;
-        document.getElementById('stationInfo').textContent = data.info;
-        document.getElementById('stationDetails').style.display = 'block';
-        document.getElementById('stationDetails').scrollIntoView({ behavior: 'smooth' });
+        img.src = data.img;
+        img.alt = data.title;
+        title.textContent = data.title;
+        info.textContent = data.info;
+        popup.style.display = 'block';
+
+        const rect = el.getBoundingClientRect();
+        popup.style.top = `${window.scrollY + rect.top}px`;
+        popup.style.left = `${rect.right + 10}px`;
       });
     });
   </script>
