@@ -93,15 +93,20 @@
       color: #7c3aed;
       text-decoration: underline;
     }
-     .container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+    .container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0e0018;
+  z-index: 9999;
+  animation: fadeOut 3.5s ease-in-out forwards;
+}
+
 
     .logo {
       font-size: 2em;
@@ -120,15 +125,27 @@
     }
 
     .magic-circle {
-      position: absolute;
-      width: 60vmin;
-      height: 60vmin;
-      background: url('magiccircle.png') no-repeat center center;
-      background-size: contain;
-      opacity: 0.8;
-      animation: expandFade 3s ease-out forwards 0.2s;
-    }
+  position: absolute;
+  width: 60vmin;
+  height: 60vmin;
+  background: url('magiccircle.png') no-repeat center center;
+  background-size: contain;
+  opacity: 0.8;
+  animation: expandFade 3s ease-out forwards 0.2s, rotate 6s linear infinite;
+}
 
+
+    @keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+    
     @keyframes fadeIn {
       to { opacity: 1; }
     }
