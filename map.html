@@ -1,99 +1,71 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>魔界府メトロ 路線図</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>魔界府メトロ - 路線図</title>
   <style>
     body {
-      font-family: "Helvetica Neue", sans-serif;
-      background: #fff1f9;
-      padding: 20px;
-      color: #1f2937;
+      background-color: #111;
+      color: white;
+      font-family: "Noto Sans JP", sans-serif;
+      margin: 0;
+      padding: 0;
     }
     h1 {
       text-align: center;
-      color: #d946ef;
-      font-size: 28px;
-      margin-bottom: 40px;
-    }
-    .map-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      position: relative;
+      color: #a855f7;
     }
     .station {
-      background: #fdf4ff;
-      border: 3px solid #d8b4fe;
-      border-radius: 20px;
-      width: 260px;
-      padding: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: #222;
+      border-radius: 12px;
+      padding: 10px 20px;
+      margin: 16px auto;
+      max-width: 480px;
       position: relative;
       cursor: pointer;
-      transition: transform 0.2s ease;
     }
     .station:hover {
-      transform: scale(1.02);
+      background: #333;
     }
-    .station::before {
-      content: "";
-      position: absolute;
-      left: -30px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      background: #c084fc;
-      border: 3px solid #7e22ce;
+    .station .dot {
+      width: 16px;
+      height: 16px;
+      background: #a855f7;
       border-radius: 50%;
-    }
-    .station h2 {
-      margin: 0 0 6px;
-      font-size: 18px;
-      color: #7e22ce;
-      text-align: center;
-    }
-    .comment {
-      font-size: 13px;
-      color: #6b7280;
-      text-align: center;
-    }
-    .connector {
-      width: 4px;
-      height: 30px;
-      background: linear-gradient(to bottom, #c084fc, #7e22ce);
-    }
-    .details-popup {
       position: absolute;
-      top: 0;
-      left: 280px;
-      z-index: 10;
-      background: #fefce8;
-      border: 2px dashed #facc15;
-      border-radius: 12px;
-      padding: 16px;
-      width: 280px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      top: 50%;
+      left: -24px;
+      transform: translateY(-50%);
+    }
+    .station-name {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    .station-desc {
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    .popup {
       display: none;
-    }
-    .details-popup img {
-      width: 100%;
+      position: absolute;
+      left: 220px;
+      top: 10px;
+      width: 240px;
+      background: #1e1e1e;
+      border: 1px solid #444;
       border-radius: 10px;
-      margin-bottom: 10px;
+      padding: 10px;
+      z-index: 10;
     }
-    .details-popup h3 {
-      font-size: 18px;
-      margin: 0 0 6px;
-      color: #92400e;
+    .popup img {
+      max-width: 100%;
+      border-radius: 6px;
     }
-    .details-popup p {
-      font-size: 14px;
-      color: #4b5563;
-      margin: 0;
-      white-space: pre-wrap;
+    .popup .caption {
+      font-size: 0.85em;
+      margin-top: 6px;
+      color: #aaa;
     }
     .secret-trigger {
       position: absolute;
@@ -101,201 +73,177 @@
       left: 190px;
       width: 30px;
       height: 30px;
-      background: rgba(255, 255, 255, 0.1); /* 薄い白で半透明 */
+      background: rgba(255, 255, 255, 0.1);
       border: 1px dashed #d946ef;
       border-radius: 6px;
       cursor: pointer;
     }
-    .cafe-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
-      display: none;
-      z-index: 100;
-      color: #fff;
-      font-size: 18px;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-    .cafe-scene {
-      width: 100%;
-      height: 100%;
-      background: url('bg_placeholder.jpg') center/cover no-repeat;
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 40px;
-      box-sizing: border-box;
-    }
-          .char-left, .char-rei, .char-kana {
-      object-fit: contain;
-      height: auto;
-      max-width: 100%;
-    }
-
     .novel-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       position: fixed;
       bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 1000px;
-      padding: 20px;
+      left: 20px;
+      right: 20px;
       background: rgba(0, 0, 0, 0.8);
-      color: white;
-      font-size: 1.1rem;
-      border-radius: 12px;
+      padding: 16px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      max-width: 90%;
+      margin: auto;
       flex-wrap: wrap;
     }
-
     .novel-text {
-      flex: 1 1 auto;
-      margin-right: 10px;
-      min-width: 0;
-    }
-
-    .novel-next-button {
-      flex: 0 0 auto;
-      background: #9333ea;
+      flex: 1;
+      font-size: 1.1em;
       color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 6px 14px;
-      cursor: pointer;
-      font-size: 0.9rem;
+      margin-bottom: 10px;
     }
-
-    @media (max-width: 600px) {
+    .next-button {
+      padding: 8px 16px;
+      background: #a855f7;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+    .character {
+      position: fixed;
+      bottom: 140px;
+      z-index: 999;
+      max-height: 60vh;
+    }
+    .char-left {
+      left: 20px;
+    }
+    .char-rei {
+      right: 160px;
+    }
+    .char-kana {
+      right: 20px;
+    }
+    @media (max-width: 768px) {
+      .character {
+        max-height: 40vh;
+      }
+      .char-left {
+        left: 10px;
+      }
+      .char-rei {
+        right: 120px;
+      }
+      .char-kana {
+        right: 10px;
+      }
       .novel-box {
         flex-direction: column;
-        align-items: stretch;
+        text-align: center;
       }
-
-      .novel-text {
-        margin-right: 0;
-        margin-bottom: 10px;
-      }
-
-      .novel-next-button {
-        align-self: flex-end;
+      .next-button {
+        margin-top: 10px;
       }
     }
   </style>
 </head>
 <body>
   <h1>魔界府メトロ - 路線図</h1>
-  <div class="map-container">
-    <div class="station" data-id="maou">魔王城<br><span class="comment">玲「いってきまーす！」／リリス「歌ってます♡」</span></div>
-    <div class="connector"></div>
-    <div class="station" data-id="chou">府庁前<br><span class="comment">奏「中心！」／ミモザ「改札広いよ」</span></div>
-    <div class="secret-trigger" title="？？？"></div>
-    <div class="connector"></div>
-    <div class="station" data-id="minami">南城下町<br><span class="comment">町民「コロッケうまい」</span></div>
-    <div class="connector"></div>
-    <div class="station" data-id="hiro">広原台<br><span class="comment">高坂「未来都市構想メモ」</span></div>
-    <div class="connector"></div>
-    <div class="station" data-id="yume">夢霧が谷<br><span class="comment">生徒「魔力検定あるよ♡」</span></div>
-  </div>
 
-  <div class="details-popup" id="popup">
-    <img src="" alt="駅イメージ" id="popupImage">
-    <h3 id="popupTitle"></h3>
-    <p id="popupInfo"></p>
-  </div>
-
-  <div class="cafe-overlay" id="cafeOverlay">
-    <div class="cafe-scene">
-      <img class="char-left" src="reina.png" alt="麗奈">
-      <img class="char-rei" src="rei.png" alt="玲">
-      <img class="char-kana" src="kana.png" alt="奏">
-      <div class="textbox" id="textBox">玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」</div>
+  <div class="station" onclick="showPopup('maou')">
+    <div class="dot"></div>
+    <div class="station-name">魔王城</div>
+    <div class="station-desc">玲「いってきまーす♡」／リリス「お弁当忘れないでね」</div>
+    <div class="popup" id="popup-maou">
+      <img src="maou.png" alt="魔王城駅" />
+      <div class="caption">魔王城駅 - 城の玄関。地下にあるメトロ駅</div>
     </div>
-    <button id="novel-next-button">▶ 次へ</button>
+  </div>
+
+  <div class="station" onclick="showPopup('fuchou')">
+    <div class="dot"></div>
+    <div class="station-name">府庁前</div>
+    <div class="station-desc">奏「中心！」／ミモザ「出入口多すぎ」</div>
+    <div class="popup" id="popup-fuchou">
+      <img src="fuchou.png" alt="府庁前駅" />
+      <div class="caption">府庁前駅 - 城下町の近代化の象徴。島式ホーム</div>
+    </div>
+  </div>
+
+  <div class="station" onclick="showPopup('nanjou')">
+    <div class="dot"></div>
+    <div class="station-name">南城下町</div>
+    <div class="station-desc">町民「コロッケうまい」</div>
+    <div class="popup" id="popup-nanjou">
+      <img src="nanjou.png" alt="南城下町駅" />
+      <div class="caption">南城下町駅 - 高架ホームが特徴の地元密着型駅</div>
+    </div>
+  </div>
+
+  <div class="station" onclick="showPopup('hirohara')">
+    <div class="dot"></div>
+    <div class="station-name">広原台</div>
+    <div class="station-desc">高坂「ここが未来の玄関口になる」</div>
+    <div class="popup" id="popup-hirohara">
+      <img src="hirohara.png" alt="広原台駅" />
+      <div class="caption">広原台駅 - 空港アクセスも可能な大ターミナル</div>
+    </div>
+  </div>
+
+  <div class="station" onclick="showPopup('yumemist')">
+    <div class="dot"></div>
+    <div class="station-name">夢霧が谷</div>
+    <div class="station-desc">サキュバス学生「今日も授業～」</div>
+    <div class="popup" id="popup-yumemist">
+      <img src="yumemist.png" alt="夢霧が谷駅" />
+      <div class="caption">夢霧が谷駅 - 森に囲まれたサキュバス学校最寄駅</div>
+    </div>
+  </div>
+
+  <div class="secret-trigger" onclick="startNovel()"></div>
+
+  <img class="character char-left" id="char-leina" src="leina.png" style="display: none" />
+  <img class="character char-rei" id="char-rei" src="rei.png" style="display: none" />
+  <img class="character char-kana" id="char-kana" src="kana.png" style="display: none" />
+
+  <div class="novel-box" id="novel-box" style="display: none">
+    <div class="novel-text" id="novel-text">......</div>
+    <button class="next-button" onclick="nextText()">▶</button>
   </div>
 
   <script>
-    const stations = {
-      maou: {
-        title: "魔王城駅",
-        img: "maou.png",
-        info: "・開業年：魔暦1001年\n・地下4階構造、魔力昇降ホーム\n・名物：リリスの発車メロディ＆Re+M+Magic公式グッズ"
-      },
-      chou: {
-        title: "府庁前駅",
-        img: "chou.png",
-        info: "・政治文化の中心駅\n・奏とミモザの記念オブジェあり\n・広報ブースとカフェが人気"
-      },
-      minami: {
-        title: "南城下町駅",
-        img: "minami.png",
-        info: "・庶民の活気あふれる商店街直結\n・名物：昼のコロッケと夕方セール\n・観光にもオススメ"
-      },
-      hiro: {
-        title: "広原台駅",
-        img: "hiro.png",
-        info: "・未来都市構想の中核拠点\n・空港アクセス対応\n・高坂大統領メモ展示コーナーあり"
-      },
-      yume: {
-        title: "夢霧が谷駅",
-        img: "yume.png",
-        info: "・サキュバス学校の最寄駅\n・魔力検定センター直結\n・魔法制服を着た案内ロボが出迎え♡"
-      }
-    };
+    function showPopup(id) {
+      document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+      const popup = document.getElementById('popup-' + id);
+      if (popup) popup.style.display = 'block';
+    }
 
-    const popup = document.getElementById("popup");
-    const img = document.getElementById("popupImage");
-    const title = document.getElementById("popupTitle");
-    const info = document.getElementById("popupInfo");
-
-    document.querySelectorAll('.station').forEach(el => {
-      el.addEventListener('click', (e) => {
-        const id = el.getAttribute('data-id');
-        const data = stations[id];
-        img.src = data.img;
-        img.alt = data.title;
-        title.textContent = data.title;
-        info.textContent = data.info;
-        popup.style.display = 'block';
-
-        const rect = el.getBoundingClientRect();
-        popup.style.top = `${window.scrollY + rect.top}px`;
-        popup.style.left = `${rect.right + 10}px`;
-      });
-    });
-
-    const overlay = document.getElementById('cafeOverlay');
-    const textBox = document.getElementById('textBox');
-    const nextBtn = document.getElementById('novel-next-button');
-    const messages = [
+    const texts = [
       "玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」",
       "麗奈「ようこそ。またバイトする？」",
       "奏「します！よろしくお願いいたします！」"
     ];
-    let msgIndex = 0;
+    let index = 0;
 
-    document.querySelector('.secret-trigger').addEventListener('click', () => {
-      overlay.style.display = 'flex';
-      msgIndex = 0;
-      textBox.textContent = messages[msgIndex];
-    });
+    function startNovel() {
+      index = 0;
+      document.getElementById('novel-box').style.display = 'flex';
+      document.getElementById('char-leina').style.display = 'block';
+      document.getElementById('char-rei').style.display = 'block';
+      document.getElementById('char-kana').style.display = 'block';
+      document.getElementById('novel-text').innerText = texts[index];
+    }
 
-    nextBtn.addEventListener('click', () => {
-      msgIndex++;
-      if (msgIndex < messages.length) {
-        textBox.textContent = messages[msgIndex];
-      } else {
-        overlay.style.display = 'none';
+    function nextText() {
+      index++;
+      if (index >= texts.length) {
+        document.getElementById('novel-box').style.display = 'none';
+        document.getElementById('char-leina').style.display = 'none';
+        document.getElementById('char-rei').style.display = 'none';
+        document.getElementById('char-kana').style.display = 'none';
+        return;
       }
-    });
+      document.getElementById('novel-text').innerText = texts[index];
+    }
   </script>
 </body>
 </html>
