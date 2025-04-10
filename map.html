@@ -88,73 +88,93 @@
       border: 1px dashed #d946ef;
       border-radius: 6px;
       cursor: pointer;
-    }
-    .novel-box {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 16px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      max-width: 90%;
-      margin: auto;
-      flex-wrap: wrap;
-    }
-    .novel-text {
-      flex: 1;
-      font-size: 1.1em;
-      color: white;
-      margin-bottom: 10px;
-    }
-    .next-button {
-      padding: 8px 16px;
-      background: #a855f7;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-    }
-    .character {
-      position: fixed;
-      bottom: 140px;
-      z-index: 999;
-      max-height: 60vh;
-    }
+    } .cafe-scene {
+    width: 100%;
+    height: 100vh;
+    background: url('bg_cafeneo.png') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .char-left, .char-rei, .char-kana {
+    position: absolute;
+    bottom: 10px;
+    display: none;
+  }
+
+  .char-left {
+    left: 5%;
+    max-height: 70vh;
+    max-width: 30%;
+  }
+
+  .char-rei {
+    right: 25%;
+    max-height: 65vh;
+    max-width: 22%;
+  }
+
+  .char-kana {
+    right: 5%;
+    max-height: 65vh;
+    max-width: 22%;
+  }
+
+  .novel-box {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.8);
+    padding: 16px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .novel-text {
+    color: white;
+    font-size: 1.1em;
+    flex: 1;
+  }
+
+  .next-button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    font-size: 1em;
+    border: none;
+    border-radius: 6px;
+    background-color: #a855f7;
+    color: white;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
     .char-left {
-      left: 20px;
+      max-height: 40vh;
+      left: 2%;
     }
     .char-rei {
-      right: 160px;
+      max-height: 35vh;
+      right: 28%;
     }
     .char-kana {
-      right: 20px;
+      max-height: 35vh;
+      right: 5%;
     }
-    @media (max-width: 768px) {
-      .character {
-        max-height: 40vh;
-      }
-      .char-left {
-        left: 10px;
-      }
-      .char-rei {
-        right: 120px;
-      }
-      .char-kana {
-        right: 10px;
-      }
-      .novel-box {
-        flex-direction: column;
-        text-align: center;
-      }
-      .next-button {
-        margin-top: 10px;
-      }
+    .novel-box {
+      flex-direction: column;
+      font-size: 0.95em;
+      padding: 12px;
     }
+    .next-button {
+      margin-top: 10px;
+    }
+  }
+    
   </style>
 </head>
 <body>
@@ -210,7 +230,7 @@
     </div>
   </div>
 
- <div class="secret-trigger" onclick="startNovel()"></div>
+<div class="secret-trigger" onclick="startNovel()"></div>
 
 <div class="cafe-overlay" id="cafeOverlay" style="display: none;">
   <div class="cafe-scene">
