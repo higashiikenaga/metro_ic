@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Re+M+PASS - 魔界府メトロ</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", sans-serif;
+      background-color: #f3f4f6;
+      color: #111;
+    }
+    .header {
+      background-color: #0f172a;
+      color: #fff;
+      padding: 16px;
+      font-size: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 20px;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .label {
+      font-size: 14px;
+      color: #555;
+    }
+    .value {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">🔮 Re+M+PASS 認証完了</div>
+  <div class="content">
+    <div class="card">
+      <div class="label">利用者</div>
+      <div class="value">アマカワ レイ 様</div>
+    </div>
+    <div class="card">
+      <div class="label">魔力残量</div>
+      <div class="value" id="magicPower">読み込み中...</div>
+    </div>
+    <div class="footer">魔界府メトロ</div>
+  </div>
+  <script>
+    navigator.getBattery().then(function(battery) {
+      const percent = Math.round(battery.level * 100);
+      document.getElementById("magicPower").textContent = percent + "%";
+    });
+  </script>
+</body>
+</html>
