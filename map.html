@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>魔界府メトロ 路線図</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      background: #fff1f9;
+      padding: 20px;
+      color: #1f2937;
+    }
+    h1 {
+      text-align: center;
+      color: #d946ef;
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+    .map-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .station {
+      background: #fdf4ff;
+      border: 3px solid #d8b4fe;
+      border-radius: 20px;
+      width: 260px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+    .station:hover {
+      transform: scale(1.02);
+    }
+    .station::before {
+      content: "";
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      background: #c084fc;
+      border: 3px solid #7e22ce;
+      border-radius: 50%;
+    }
+    .station h2 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: #7e22ce;
+      text-align: center;
+    }
+    .comment {
+      font-size: 13px;
+      color: #6b7280;
+      text-align: center;
+    }
+    .connector {
+      width: 4px;
+      height: 30px;
+      background: linear-gradient(to bottom, #c084fc, #7e22ce);
+    }
+  </style>
+</head>
+<body>
+  <h1>魔界府メトロ - 路線図</h1>
+  <div class="map-container">
+    <div class="station">
+      <h2>魔王城</h2>
+      <div class="comment">玲「魔界の中心から、いってきまーす！」／リリス「発車メロディは私が歌ってます♡」</div>
+    </div>
+    <div class="connector"></div>
+    <div class="station">
+      <h2>府庁前</h2>
+      <div class="comment">奏「ここが魔界の政治と文化の中心！」／ミモザ「改札はモデル体型の人に優しい構造です」</div>
+    </div>
+    <div class="connector"></div>
+    <div class="station">
+      <h2>南城下町</h2>
+      <div class="comment">町民「このへん、お昼のコロッケがめっちゃ美味しいです」</div>
+    </div>
+    <div class="connector"></div>
+    <div class="station">
+      <h2>広原台</h2>
+      <div class="comment">高坂大統領メモ：「未来都市構想の核として開発。ここから空港アクセスもOK」</div>
+    </div>
+    <div class="connector"></div>
+    <div class="station">
+      <h2>夢霧が谷</h2>
+      <div class="comment">生徒「サキュバスの聖地へようこそっ♡ 魔力検定はここからです〜！」</div>
+    </div>
+  </div>
+</body>
+</html>
