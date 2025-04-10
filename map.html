@@ -210,15 +210,17 @@
     </div>
   </div>
 
-  <div class="secret-trigger" onclick="startNovel()"></div>
+  <div class="secret-trigger" onclick="startNovel()">
+    <div class="cafe-overlay" id="cafeOverlay">
+  <div class="cafe-scene">
+    <img class="char-left" src="reina.png" alt="麗奈">
+    <img class="char-rei" src="rei.png" alt="玲">
+    <img class="char-kana" src="kana.png" alt="奏">
+    <div class="textbox" id="textBox">玲「ここが魔界府に移転したliveNeoか！なんかかっこいいな！」</div>
+    <button id="nextBtn">▶ 次へ</button>
+  </div>
+</div>
 
-  <img class="character char-left" id="char-leina" src="leina.png" style="display: none" />
-  <img class="character char-rei" id="char-rei" src="rei.png" style="display: none" />
-  <img class="character char-kana" id="char-kana" src="kana.png" style="display: none" />
-
-  <div class="novel-box" id="novel-box" style="display: none">
-    <div class="novel-text" id="novel-text">......</div>
-    <button class="next-button" onclick="nextText()">▶</button>
   </div>
 
   <script>
