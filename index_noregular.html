@@ -126,7 +126,7 @@
       const level = Math.floor(battery.level * 100);
       document.getElementById("status").textContent = `魔力残量：${level}%`;
 
-      const shareURL = `https://twitter.com/intent/tweet?url=https://higashiikenaga.github.io/metro_ic/index_noregular.html&text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23充電サキュバスリリス様`;
+      const shareURL = `https://twitter.com/intent/tweet?text=https://higashiikenaga.github.io/metro_ic/index_noregular.html%n現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23充電サキュバスリリス様`;
       document.getElementById("share-btn").href = shareURL;
 
       if (battery.charging) {
