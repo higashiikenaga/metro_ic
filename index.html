@@ -11,6 +11,34 @@
       background-color: #f3f4f6;
       color: #111;
     }
+    
+    body.normal-mode {
+      background: #f5f5fa;
+      color: #333;
+    }
+    body.live-mode {
+      background: radial-gradient(circle at center, #ffccff, #660066);
+      color: #fff;
+      animation: sparkle 4s infinite;
+    }
+    @keyframes sparkle {
+      0% { background-position: center; }
+      50% { background-position: top right; }
+      100% { background-position: center; }
+    }
+    #share-btn {
+      display: inline-block;
+      margin-top: 2em;
+      padding: 0.7em 1.5em;
+      background: #8884ff;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #share-btn:hover {
+      background: #6f6fff;
+    }
     .header {
       background-color: #0f172a;
       color: #fff;
@@ -215,21 +243,17 @@
     </div>
     <div class="card">
       <div class="label">魔力残量</div>
-      <div class="value" id="magicPower">読み込み中...</div>
+      <div id="status">魔力残量：--%</div>
+      <div id="message">……契約、完了したよ。</div>
     </div>
     <div class="card">
       <div class="label">ID</div>
       <div class="value">ReMPASS_01_REI</div>
     </div>
-    <div class="footer"><a href="map.html">路線マップ</a><p>魔界府メトロ</p></div>
+    <div class="footer"><a id="share-btn" href="#" target="_blank">魔力をSNSに共有する</a><a href="map.html">路線マップ</a><p>魔界府メトロ</p></div>
   </div>
   <div id="magicEffect"></div>
   <script>
-    navigator.getBattery().then(function(battery) {
-      const percent = Math.round(battery.level * 100);
-      document.getElementById("magicPower").textContent = percent + "%";
-    });
-
     let pressTimer;
     document.body.addEventListener('touchstart', function () {
       pressTimer = setTimeout(() => {
@@ -278,6 +302,21 @@
     if (day === 0 || day === 6) {
       document.getElementById("scheduleArea").textContent = "📅 今日の予定：10:00-11:30 高坂大統領との会談 / 13:30-16:45 Re+M+Magic練習 / 19:00〜20:30 Re+M+Magicライブ / 21:00〜 魔界府定例会議";
     }
+
+    navigator.getBattery().then(function(battery) {
+      const level = Math.floor(battery.level * 100);
+      document.getElementById("status").textContent = `魔力残量：${level}%`;
+
+      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23玲くんと契約済`;
+      document.getElementById("share-btn").href = shareURL;
+
+      if (battery.charging) {
+        document.body.classList.remove("normal-mode");
+        document.body.classList.add("live-mode");
+        document.getElementById("title").textContent = "Re+M+LIVE MODE";
+        document.getElementById("message").textContent = "魔力供給中……ステージの準備を始めるよ！";
+      }
+    });
   </script>
 </body>
 </html>
