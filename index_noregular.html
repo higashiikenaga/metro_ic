@@ -95,7 +95,7 @@
   <div class="card">
     <div class="label">魔力残量</div>
     <div id="status">魔力残量：--%</div>
-    <div id="message">リリス様、準備完了です♡</div>
+    <div id="message">準備完了です♡</div>
   </div>
   <div class="card">
     <div class="label">ID</div>
@@ -111,27 +111,27 @@
       const level = Math.floor(battery.level * 100);
       document.getElementById("status").textContent = `魔力残量：${level}%`;
 
-      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23リリス様仕様`;
+      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23充電サキュバスリリス様`;
       document.getElementById("share-btn").href = shareURL;
 
       if (battery.charging) {
         document.body.classList.remove("normal-mode");
         document.body.classList.add("live-mode");
         document.getElementById("title").textContent = "Re+M+LIVE MODE";
-        document.getElementById("message").textContent = "リリス様、魔力供給中ですよ♡ ステージ、いっちゃいますか？";
+        document.getElementById("message").textContent = "リリス、魔力供給中ですよ♡ ステージ、いっちゃいますか？";
       } else {
         document.body.classList.remove("live-mode");
         document.body.classList.add("normal-mode");
         document.body.style.color = "#333";
 
         if (level >= 75) {
-          document.getElementById("message").textContent = "魔力たっぷりですね、リリス様♡";
+          document.getElementById("message").textContent = "魔力たっぷりです！♡";
         } else if (level >= 40) {
           document.getElementById("message").textContent = "いい感じの魔力量ですよ〜♪";
         } else if (level >= 15) {
           document.getElementById("message").textContent = "そろそろ補給したほうが……？ うふふっ。";
         } else {
-          document.getElementById("message").textContent = "だ、だめですリリス様っ！ 魔力が切れちゃいます〜！";
+          document.getElementById("message").textContent = "だ、だめですぅ！ 魔力が切れちゃいます〜！";
         }
       }
     });
