@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Re+M+PASS - 情報画面</title>
+  <title>Re+M+PASS - Lilith</title>
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
@@ -17,17 +17,25 @@
     }
     body.live-mode {
       background: radial-gradient(circle at center, #ffc0cb, #aa00aa);
-      color: #fff;
-      animation: sparkle 4s infinite;
+      color: #333;
+      animation: fadeIn 1.2s ease-in-out;
     }
     body.live-mode h1,
     body.live-mode #status,
     body.live-mode #message {
-      color: #fff;
-      text-shadow: 1px 1px 2px #333;
+      color: #333;
+      text-shadow: none !important;
     }
     @keyframes sparkle {
       0% { background-position: center; }
+      50% { background-position: top right; }
+      100% { background-position: center; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
       50% { background-position: top right; }
       100% { background-position: center; }
     }
@@ -70,15 +78,15 @@
   </style>
 </head>
 <body class="normal-mode">
-  <h1 id="title">Re+M+PASS</h1>
+  <h1 id="title">Re+M+PASS - Lilith専用画面</h1>
 
   <div class="card">
     <div class="label">利用者</div>
-    <div class="value">リリス ナイトメア 様</div>
+    <div class="value">リリス・ナイトメア 様</div>
   </div>
   <div class="card">
-    <div class="label">共同カード名義人</div>
-    <div class="value">アマカワ レイ 様</div>
+    <div class="label">定期区間</div>
+    <div class="value">夢霧が谷 → 学園前</div>
   </div>
   <div class="card">
     <div class="label">魔力残量</div>
@@ -92,7 +100,7 @@
 
   <a id="share-btn" href="#" target="_blank">魔力をSNSに共有する</a>
 
-  <div class="footer"><a href="map.html">魔界府メトロパス | Re+M+Magic!</a></div>
+  <div class="footer">魔界府メトロパス | Re+M+Magic!</div>
 
   <script>
     navigator.getBattery().then(function(battery) {
