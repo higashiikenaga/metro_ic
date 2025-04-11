@@ -10,8 +10,10 @@
       font-family: "Helvetica Neue", sans-serif;
       background-color: #f3f4f6;
       color: #111;
+       transition: background 1s, color 1s;
     }
     
+    }
     body.normal-mode {
       background: #f5f5fa;
       color: #333;
@@ -22,8 +24,10 @@
       animation: sparkle 4s infinite;
     }
     body.live-mode h1,
-    body.live-mode .content, {
-      color: black;
+    body.live-mode #status,
+    body.live-mode #message {
+      color: #fff;
+      text-shadow: 1px 1px 2px #333;
     }
     @keyframes sparkle {
       0% { background-position: center; }
@@ -311,7 +315,7 @@
       const level = Math.floor(battery.level * 100);
       document.getElementById("status").textContent = `魔力残量：${level}%`;
 
-      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23玲くんと契約済`;
+      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23充電玲くん`;
       document.getElementById("share-btn").href = shareURL;
 
       if (battery.charging) {
@@ -319,6 +323,20 @@
         document.body.classList.add("live-mode");
         document.getElementById("title").textContent = "Re+M+LIVE MODE";
         document.getElementById("message").textContent = "魔力供給中……ステージの準備を始めるよ！";
+      } else {
+        document.body.classList.remove("live-mode");
+        document.body.classList.add("normal-mode");
+        document.body.style.color = "#333";
+
+        if (level >= 75) {
+          document.getElementById("message").textContent = "魔力は十分。準備は万端だね。";
+        } else if (level >= 40) {
+          document.getElementById("message").textContent = "うん、まだまだいけるよ！";
+        } else if (level >= 15) {
+          document.getElementById("message").textContent = "そろそろ魔力、補給したいかも……";
+        } else {
+          document.getElementById("message").textContent = "魔力切れ寸前っ！？カフェで充電しよ…！";
+        }
       }
     });
   </script>
