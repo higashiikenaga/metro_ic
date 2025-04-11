@@ -109,27 +109,27 @@
       const level = Math.floor(battery.level * 100);
       document.getElementById("status").textContent = `魔力残量：${level}%`;
 
-      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23魔王様仕様`;
+      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23充電魔王玲くん`;
       document.getElementById("share-btn").href = shareURL;
 
       if (battery.charging) {
         document.body.classList.remove("normal-mode");
         document.body.classList.add("live-mode");
         document.getElementById("title").textContent = "Re+M+LIVE MODE";
-        document.getElementById("message").textContent = "魔王様、魔力供給中です。ステージ準備を開始します。";
+        document.getElementById("message").textContent = "魔力供給中です。ステージ準備を開始します。";
       } else {
         document.body.classList.remove("live-mode");
         document.body.classList.add("normal-mode");
         document.body.style.color = "#333";
 
         if (level >= 75) {
-          document.getElementById("message").textContent = "魔力は十分。準備は万端ですね、魔王様。";
+          document.getElementById("message").textContent = "魔力は十分。準備は万端ですね。";
         } else if (level >= 40) {
-          document.getElementById("message").textContent = "まだまだ戦えますよ、魔王様！";
+          document.getElementById("message").textContent = "まだまだ戦えます！";
         } else if (level >= 15) {
           document.getElementById("message").textContent = "そろそろ魔力補給のタイミングかもしれません。";
         } else {
-          document.getElementById("message").textContent = "魔力が枯渇寸前です、魔王様っ！すぐに補給を！";
+          document.getElementById("message").textContent = "魔力が枯渇寸前です！すぐに補給しないとぉ……！";
         }
       }
     });
