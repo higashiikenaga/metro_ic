@@ -75,12 +75,23 @@
       font-size: 12px;
       margin-top: 40px;
     }
+    #secretBtn {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.3); /* 半透明で見える */
+  z-index: 1000;
+        pointer-events: auto;
+}
+
   </style>
 </head>
 <body class="normal-mode">
   <h1 id="title">Re+M+PASS - 情報画面</h1>
   <!-- リリスページのどこかに -->
-  <div id="secretBtn" style="position:fixed; background-color:black; bottom:0; right:0; width:50px; height:50px;"></div>
+  <div id="secretBtn"></div>
 
 
   <div class="card">
@@ -138,14 +149,17 @@
 
     // 長押しで秘密のページに遷移
 let pressTimer;
-document.getElementById("secretBtn").addEventListener("touchstart", function () {
+const secretBtn = document.getElementById("secretBtn");
+
+secretBtn.addEventListener("touchstart", function () {
   pressTimer = setTimeout(() => {
     window.location.href = "rei_sleep.html";
-  }, 1200);
+  }, 1000); // 長押し1秒
 });
-document.getElementById("secretBtn").addEventListener("touchend", function () {
+secretBtn.addEventListener("touchend", function () {
   clearTimeout(pressTimer);
 });
+
 
   </script>
 </body>
