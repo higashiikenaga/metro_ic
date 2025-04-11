@@ -3,27 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Re+M+PASS - 魔界府メトロ</title>
- <style>
+  <title>Re+M+PASS - 情報画面</title>
+  <style>
     body {
-      margin: 0;
-      font-family: "Helvetica Neue", sans-serif;
-      background-color: #f3f4f6;
-      color: #111;
+      font-family: "Segoe UI", sans-serif;
+      text-align: center;
+      padding: 2em;
+      transition: background 1s, color 1s;
     }
-   
     body.normal-mode {
       background: #f5f5fa;
       color: #333;
     }
     body.live-mode {
-      background: radial-gradient(circle at center, #ffccff, #660066);
+      background: radial-gradient(circle at center, #ffc0cb, #aa00aa);
       color: #fff;
       animation: sparkle 4s infinite;
     }
-   body.live-mode h1,
-    body.live-mode .content, {
-      color: black;
+    body.live-mode h1,
+    body.live-mode #status,
+    body.live-mode #message {
+      color: #fff;
+      text-shadow: 1px 1px 2px #333;
     }
     @keyframes sparkle {
       0% { background-position: center; }
@@ -34,31 +35,22 @@
       display: inline-block;
       margin-top: 2em;
       padding: 0.7em 1.5em;
-      background: #8884ff;
+      background: #f472b6;
       color: white;
       border-radius: 10px;
       text-decoration: none;
       font-weight: bold;
     }
     #share-btn:hover {
-      background: #6f6fff;
-    }
-    .header {
-      background-color: #0f172a;
-      color: #fff;
-      padding: 16px;
-      font-size: 20px;
-      text-align: center;
-    }
-    .content {
-      padding: 20px;
+      background: #ec4899;
     }
     .card {
       background-color: #fff;
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
+      margin: 20px auto;
+      max-width: 400px;
     }
     .label {
       font-size: 14px;
@@ -75,247 +67,60 @@
       font-size: 12px;
       margin-top: 40px;
     }
-    .welcome {
-      font-size: 16px;
-      text-align: center;
-      margin: 20px auto;
-      color: #6b21a8;
-      opacity: 0;
-      animation: fadeIn 2s ease-in-out forwards;
-    }
-    #magicEffect {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, rgba(147, 51, 234, 0.7), transparent 70%);
-      display: none;
-      z-index: 1000;
-      animation: pulse 0.6s ease-in-out;
-    }
-    .nightmode {
-      background-color: #1e1b2e;
-      color: #eee;
-    }
-    .nightmode .card {
-      background-color: #2d2640;
-      color: #eee;
-      box-shadow: 0 0 8px rgba(153, 102, 255, 0.4);
-    }
-    .nightmode .header {
-      background-color: #4b1e74;
-    }
-    .nightmode .welcome {
-      color: #a78bfa;
-    }
-    .schedule {
-      font-size: 14px;
-      color: #333;
-      margin-top: 10px;
-      text-align: center;
-    }
-    .alert {
-      font-size: 14px;
-      color: #c026d3;
-      text-align: center;
-      margin-top: 10px;
-    }
-    .alert a {
-      color: #7c3aed;
-      text-decoration: underline;
-    }
-    .container {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #3D1353;
-  z-index: 9999;
-  animation: fadeOut 3.5s ease-in-out forwards;
-}
-
-
-    .logo {
-      font-size: 2em;
-      font-weight: bold;
-      color: #ccc;
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 1.2s forwards 0.5s;
-    }
-
-    .subtitle {
-      font-size: 1em;
-      color: #ddd;
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 1.2s forwards 1.2s;
-    }
-
-    .magic-circle {
-  position: absolute;
-  width: 60vmin;
-  height: 60vmin;
-  background: url('magiccircle.png') no-repeat center center;
-  background-size: contain;
-  opacity: 0.85;
-  animation: expandFade 3s ease-out forwards 0.2s, rotate 3s linear infinite, pulseLight 1.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 15px #c084fc); /* 紫の光！ */
-}
-
-
-    @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulseLight {
-  0%, 100% { opacity: 0.9; filter: drop-shadow(0 0 10px #a855f7); }
-  50% { opacity: 1; filter: drop-shadow(0 0 20px #f0abfc); }
-}
-
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; display: none; }
-}
-    
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes expandFade {
-      0% {
-        transform: scale(0.8);
-        opacity: 0.8;
-      }
-      100% {
-        transform: scale(2.5);
-        opacity: 0;
-      }
-    }
-
-    audio { display: none; }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-    @keyframes pulse {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1);
-      }
-    }
   </style>
 </head>
-<body>
-  <div class="container">
-    <div class="magic-circle"></div>
-    <div class="logo">魔界府交通局</div>
-    <div class="subtitle">Makaifu Metro Service</div>
+<body class="normal-mode">
+  <h1 id="title">Re+M+PASS</h1>
+
+  <div class="card">
+    <div class="label">利用者</div>
+    <div class="value">リリス ナイトメア 様</div>
   </div>
-  
-  <audio id="magic-sound" autoplay>
-  <source src="se_train.mp3" type="audio/mpeg">
-  </audio>
-  <div class="header">🔮 Re+M+PASS 認証完了</div>
-  <div class="welcome" id="welcomeMessage">リリス様、ようこそ魔界府メトロサービスへ</div>
-  <div class="schedule" id="scheduleArea"></div>
-  <div class="alert" id="alertArea"></div>
-  <div class="content">
-    <div class="card">
-      <div class="label">利用者</div>
-      <div class="value">リリス ナイトメア 様</div>
-    </div>
-    <div class="card">
-      <div class="label">魔力残量</div>
-      <div id="status">魔力残量：--%</div>
-      <div id="message">……契約、完了したよ。</div>
-    </div>
-    <div class="card">
-      <div class="label">ID</div>
-      <div class="value">ReMPASS_01_REI</div>
-    </div>
-    <div class="footer"><a href="map.html">路線マップ</a><p>魔界府メトロ</p></div>
+  <div class="card">
+    <div class="label">共同カード名義人</div>
+    <div class="value">アマカワ レイ 様</div>
   </div>
-  <div id="magicEffect"></div>
+  <div class="card">
+    <div class="label">魔力残量</div>
+    <div id="status">魔力残量：--%</div>
+    <div id="message">リリス様、準備完了です♡</div>
+  </div>
+  <div class="card">
+    <div class="label">ID</div>
+    <div class="value">ReMPASS_02_LILITH</div>
+  </div>
+
+  <a id="share-btn" href="#" target="_blank">魔力をSNSに共有する</a>
+
+  <div class="footer"><a href="map.html">魔界府メトロパス | Re+M+Magic!</a></div>
+
   <script>
-
-    let pressTimer;
-    document.body.addEventListener('touchstart', function () {
-      pressTimer = setTimeout(() => {
-        const effect = document.getElementById("magicEffect");
-        effect.style.display = "block";
-        setTimeout(() => {
-          effect.style.display = "none";
-        }, 600);
-      }, 600);
-    });
-    document.body.addEventListener('touchend', function () {
-      clearTimeout(pressTimer);
-    });
-
-    const today = new Date();
-    const formatted = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
-    const hour = today.getHours();
-    const day = today.getDay();
-    let message = "リリス様、今日も魔界府メトロサービスをご利用くださいましてありがとうございます。";
-    if (hour >= 5 && hour < 9) {
-      message += " お仕事頑張ってください！";
-    } else if (hour >= 12 && hour < 14) {
-      message += " 今日も公務頑張ってね！ by 天川玲";
-    } else if (hour >= 17 && hour < 21) {
-      message += " 一日お疲れ様でした。ご帰宅の際も魔力補充をお忘れなく。";
-    } else if (hour >= 22 || hour < 4) {
-      document.body.classList.add("nightmode");
-      message += " 魔王城ナイトモード発動中。静かなる魔力が満ちています...";
-    }
-
-    // 満月の日（毎月15日仮定）
-    if (today.getDate() === 15) {
-      message += " 本日は満月。魔力が満ちています！いっぱい使っちゃおう！🌕";
-    }
-
-    // 年度末アラート（3月25日〜31日）
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
-    if (month === 3 && date >= 25) {
-      document.getElementById("alertArea").innerHTML = "⚠️ 魔界府メトロは年度末ダイヤ改正期間です。<a href='https://higashiikenaga.github.io/metro_ic/timetable.html' target='_blank'>時刻表をご確認ください</a>";
-    }
-
-    document.getElementById("welcomeMessage").textContent = `${formatted} ${message}`;
-
-    // 土日スケジュール
-    if (day === 0 || day === 6) {
-      document.getElementById("scheduleArea").textContent = "📅 今日の予定：10:00-11:30 高坂大統領との会談参加 / 13:30-16:45 Re+M+Magic練習見学 / 19:00〜20:30 Re+M+Magicライブ視察 / 21:00〜 魔界府定例会議";
-    }
-
-     navigator.getBattery().then(function(battery) {
+    navigator.getBattery().then(function(battery) {
       const level = Math.floor(battery.level * 100);
       document.getElementById("status").textContent = `魔力残量：${level}%`;
 
-      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23玲くんと契約済`;
+      const shareURL = `https://twitter.com/intent/tweet?text=現在の魔力残量は${level}%25だよ！%20%23ReM_PASS%20%23リリス様仕様`;
       document.getElementById("share-btn").href = shareURL;
 
       if (battery.charging) {
         document.body.classList.remove("normal-mode");
         document.body.classList.add("live-mode");
         document.getElementById("title").textContent = "Re+M+LIVE MODE";
-        document.getElementById("message").textContent = "魔力供給中……ステージの準備を始めるよ！";
+        document.getElementById("message").textContent = "リリス様、魔力供給中ですよ♡ ステージ、いっちゃいますか？";
+      } else {
+        document.body.classList.remove("live-mode");
+        document.body.classList.add("normal-mode");
+        document.body.style.color = "#333";
+
+        if (level >= 75) {
+          document.getElementById("message").textContent = "魔力たっぷりですね、リリス様♡";
+        } else if (level >= 40) {
+          document.getElementById("message").textContent = "いい感じの魔力量ですよ〜♪";
+        } else if (level >= 15) {
+          document.getElementById("message").textContent = "そろそろ補給したほうが……？ うふふっ。";
+        } else {
+          document.getElementById("message").textContent = "だ、だめですリリス様っ！ 魔力が切れちゃいます〜！";
+        }
       }
     });
   </script>
